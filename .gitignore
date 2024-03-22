@@ -1,0 +1,12 @@
+# Emacs
+/emacs/auto-save-list
+/emacs/backups
+/emacs/eln-cache
+/emacs/elpa
+/emacs/var
+/emacs/.cache
+/emacs/eshell
+/emacs/custom.el
+/emacs/history
+/emacs/recentf
+/emacs/projects
