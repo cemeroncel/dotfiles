@@ -1,0 +1,3 @@
+#+Title: Cem Eröncel's =dotfiles= repository
+
+This repo is the home for the configuration files for various programs that I am using. 
