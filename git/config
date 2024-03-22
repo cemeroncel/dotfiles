@@ -1,0 +1,4 @@
+# Git configuration file
+[user]
+        name = "cemeroncel"
+        email = "cemeroncel@gmail.com"
