@@ -85,8 +85,11 @@
 (require 'ce-backups)                   ; sane defaults for backups
 (require 'ce-better-defaults)           ; better defaults for Emacs
 (require 'ce-completion)                ; modern completion mechanism
+(require 'ce-help)                      ; more helpful help buffers
 (require 'ce-ide)                       ; Turn Emacs into an IDE for all languages
 (require 'ce-lang-python)               ; Python configuration
+(require 'ce-latex)                     ; For doing science
+(require 'ce-pdf)                       ; Read PDFs from Emacs
 (require 'ce-ui)                        ; theming and user interface
 (require 'ce-vc)                        ; version control
 
