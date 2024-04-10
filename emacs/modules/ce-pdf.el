@@ -26,7 +26,11 @@
 
 (use-package pdf-tools
   :ensure t
-  :defer t)
+  :config
+  (add-hook 'doc-view-mode-hook (lambda () (require 'pdf-tools)))
+  (pdf-loader-install)
+  (setq-default pdf-view-display-size 'fit-width)
+  )
 
 
 (provide 'ce-pdf)
