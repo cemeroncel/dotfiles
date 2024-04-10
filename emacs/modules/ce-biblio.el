@@ -24,11 +24,41 @@
 
 ;;; Code:
 
+;; Location of the library folder
+(defvar ce/bibliography-folder
+  (expand-file-name "Library" "~/Documents")
+  "Path to library folder.")
+
+;; Location of the .bib files
+(defvar ce/bibliography-files
+  `(
+    ,(expand-file-name "library.bib" ce/bibliography-folder)
+    )
+  "List of .bib file location.")
+
+;; Location for the files of the bibliography items
+(defvar ce/bibliography-pdfs
+  (expand-file-name "pdfs/" ce/bibliography-folder)
+  "Path to the folder where files for the bibliography items are
+stored.")
+
+;; Emacs interface to inspire
+;; https://github.com/Simon-Lin/inspire.el
 (use-package inspire
   :ensure t
   :custom
-  (insp)
+  ;; Make display faces use variable fonts
+  (inspire-use-variable-pitch nil)
+  ;; Not pop up a new frame when initiating a new inspire query
+  (inspire-pop-up-new-frame nil)
+  ;; Default download folder for papers
+  (inspire-default-download-folder ce/bibliography-pdfs)
+  ;; Set the master bib file
+  (inspire-master-bibliography-file (car ce/bibliography-files))
+  ;; Use absolute paths for pdf links when exporting bibTeX entries
+  (inspire-pdf-use-absolute-path t)
   )
+
 
 
 (provide 'ce-biblio)

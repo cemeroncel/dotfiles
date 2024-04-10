@@ -84,6 +84,7 @@
 ;; Load the custom modules
 (require 'ce-backups)                   ; sane defaults for backups
 (require 'ce-better-defaults)           ; better defaults for Emacs
+(require 'ce-biblio)                    ; bibliography management
 (require 'ce-completion)                ; modern completion mechanism
 (require 'ce-help)                      ; more helpful help buffers
 (require 'ce-ide)                       ; Turn Emacs into an IDE for all languages
