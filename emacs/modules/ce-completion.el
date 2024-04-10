@@ -89,9 +89,25 @@
 ;; setting is useful beyond Corfu.
 (setopt read-extended-command-predicate #'command-completion-default-include-p)
 
+;; Enable indentation+completion using the TAB key.
+;; `completion-at-point' is often to M-TAB.
+(setopt tab-always-indent 'complete)
+
+(use-package corfu
+  :ensure t
+  :custom
+  ;; Enable auto completion
+  (corfu-auto t)
+  (corfu-quit-no-match 'separator)
+  :init
+  (global-corfu-mode))
+
 (use-package company
   :ensure t
+  :disabled
   :hook (after-init . global-company-mode))
+
+;; 
 
 (provide 'ce-completion)
 ;;; ce-completion.el ends here
