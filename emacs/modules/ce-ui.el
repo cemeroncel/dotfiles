@@ -33,7 +33,7 @@
   ;; can specify them in `ef-themes-to-toggle' and then invoke the command
   ;; `ef-themes-toggle'.  All the themes are included in the variable
   ;; `ef-themes-collection'.
-  (ef-themes-to-toggle '(ef-frost ef-elea-dark))
+  (ef-themes-to-toggle '(ef-light ef-elea-dark))
 
   (ef-themes-headings ; read the manual's entry or the doc string
    '((0 variable-pitch light 1.9)
