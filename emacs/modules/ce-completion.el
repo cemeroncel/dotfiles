@@ -99,6 +99,7 @@
   ;; Enable auto completion
   (corfu-auto t)
   (corfu-quit-no-match 'separator)
+  (corfu-preview-current nil)
   :init
   (global-corfu-mode))
 
