@@ -68,9 +68,33 @@
 (when (string-equal (system-name) "titus")
   (setq ce/font-height 140))
 
+(when (string-equal (system-name) "universalis")
+  (setq ce/font-height 130))
+
+;; Setting the mono-spaced typeface
+(defvar ce/mono-spaced-font "Iosevka Curly"
+  "Font family that will be passed to `default' and `fixed-pitch'
+face attributes.")
+
+(when (string-equal (system-name) "universalis")
+  (setq ce/mono-spaced-font "Iosevka Curly"))
+
+(when (string-equal (system-name) "galagoticus")
+  (setq ce/mono-spaced-font "Iosevka Comfy"))
+
+;; Setting the proportionally-spaced typeface
+(defvar ce/variable-spaced-font "Iosevka Etoile"
+  "Font family that will be passed to `variable-pitch' face attribute.")
+
+(when (string-equal (system-name) "universalis")
+  (setq ce/variable-spaced-font "Iosevka Etoile"))
+
+(when (string-equal (system-name) "galagoticus")
+  (setq ce/variable-spaced-font "Iosevka Comfy Duo"))
+
 ;; Typefaces
-(set-face-attribute 'default nil :family "Iosevka Comfy" :height ce/font-height)
-(set-face-attribute 'variable-pitch nil :family "Iosevka Comfy Duo" :height ce/font-height)
+(set-face-attribute 'default nil :family ce/mono-spaced-font :height ce/font-height)
+(set-face-attribute 'variable-pitch nil :family ce/variable-spaced-font :height ce/font-height)
 (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
 
 ;;;; Custom modules
