@@ -115,6 +115,7 @@ face attributes.")
 (require 'ce-lang-python)               ; Python configuration
 (require 'ce-latex)                     ; For doing science
 (require 'ce-pdf)                       ; Read PDFs from Emacs
+(require 'ce-pkm)                       ; Personal knowledge management
 (require 'ce-ui)                        ; theming and user interface
 (require 'ce-vc)                        ; version control
 
