@@ -79,7 +79,7 @@ face attributes.")
 (when (string-equal (system-name) "universalis")
   (setq ce/mono-spaced-font "Iosevka Curly"))
 
-(when (string-equal (system-name) "galagoticus")
+(when (string-equal (system-name) "tuxedus")
   (setq ce/mono-spaced-font "Iosevka Comfy"))
 
 ;; Setting the proportionally-spaced typeface
@@ -89,7 +89,7 @@ face attributes.")
 (when (string-equal (system-name) "universalis")
   (setq ce/variable-spaced-font "Iosevka Etoile"))
 
-(when (string-equal (system-name) "galagoticus")
+(when (string-equal (system-name) "tuxedus")
   (setq ce/variable-spaced-font "Iosevka Comfy Duo"))
 
 ;; Typefaces
