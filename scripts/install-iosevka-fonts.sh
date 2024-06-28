@@ -1,5 +1,5 @@
 #!/bin/bash
-RELEASE=29.2.1
+RELEASE=30.3.0
 mkdir -p /tmp/iosevka-font/$RELEASE
 cd /tmp/iosevka-font/$RELEASE
 
