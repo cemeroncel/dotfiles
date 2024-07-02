@@ -57,7 +57,7 @@
   ;; (load-theme 'ef-elea-dark :no-confirm)
 
   ;; OR use this to load the theme which also calls `ef-themes-post-load-hook':
-  (ef-themes-select 'ef-frost)
+  (ef-themes-select 'ef-light)
 
   ;; The themes we provide are recorded in the `ef-themes-dark-themes',
   ;; `ef-themes-light-themes'.
