@@ -108,7 +108,32 @@
   :disabled
   :hook (after-init . global-company-mode))
 
-;; 
+;; Consult
+(use-package consult
+  :ensure t
+  ;; TODO: Add `consult-org-heading' and `consult-org-agenda' into
+  ;; `org-mode-map'
+  :bind (
+         ("M-s b" . consult-buffer)
+         ("M-s y" . consult-yank-from-kill-ring)
+         ("M-s r" . consult-register)
+         ("M-s g" . consult-goto-line)
+         ("M-s m" . consult-mark)
+         ("M-s M" . consult-global-mark)
+         ("M-s o" . consult-outline)
+         ("M-s i" . consult-imenu)
+         ("M-s I" . consult-imenu-multi)
+         ("M-s l" . consult-line)
+         ("M-s L" . consult-line-multi)
+         ("M-s ." . consult-ripgrep)
+         ("M-s e" . consult-flymake)
+         ("M-s E" . consult-compile-error)
+         ("M-s x" . consult-xref)
+         ("M-s i" . consult-info)
+         ("M-s t" . consult-theme)))
+
+
+
 
 (provide 'ce-completion)
 ;;; ce-completion.el ends here
