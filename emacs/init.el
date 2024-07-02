@@ -82,6 +82,9 @@ face attributes.")
 (when (string-equal (system-name) "tuxedus")
   (setq ce/mono-spaced-font "Iosevka Comfy"))
 
+;; (when (string-equal (system-name) "titus")
+;;   (setq ce/mono-spaced-font "Cascadia Code"))
+
 ;; Setting the proportionally-spaced typeface
 (defvar ce/variable-spaced-font "Iosevka Etoile"
   "Font family that will be passed to `variable-pitch' face attribute.")
@@ -91,6 +94,9 @@ face attributes.")
 
 (when (string-equal (system-name) "tuxedus")
   (setq ce/variable-spaced-font "Iosevka Comfy Duo"))
+
+(when (string-equal (system-name) "titus")
+  (setq ce/variable-spaced-font "Iosevka Etoile"))
 
 ;; Typefaces
 (set-face-attribute 'default nil :family ce/mono-spaced-font :height ce/font-height)
