@@ -46,6 +46,37 @@ stored.")
                               ))
 (setq ce/bibliography-pdfs (expand-file-name "pdfs/" ce/bibliography-folder))
 
+;; Citar
+(use-package citar
+  :ensure t
+  ;; Use the `completion-at-point' (capf) functionality in LaTeX and
+  ;; Org mode
+  :hook
+  (LaTeX-mode . citar-capf-setup)
+  (org-mode . citar-capf-setup)
+  ;; Replace the impossible to remember keybinding for inserting
+  ;; citations in Org mode
+  :bind
+  (
+   ("C-c n b" . #'citar-open)
+   :map org-mode-map
+        ("C-c b" . #'org-cite-insert))
+  :custom
+  ;; List of the bibliography files
+  (citar-bibliography ce/bibliography-files)
+  ;; Org-mode related settings
+  (org-cite-global-bibliography ce/bibliography-files)
+  (org-cite-insert-processor 'citar)
+  (org-cite-follow-processor 'citar)
+  (org-cite-activate-processor 'citar)
+  )
+
+(use-package citar-embark
+  :ensure t
+  :after (citar embark)
+  :no-require
+  :config (citar-embark-mode))
+
 ;; Emacs interface to inspire
 ;; https://github.com/Simon-Lin/inspire.el
 (use-package inspire
@@ -81,7 +112,10 @@ stored.")
   (denote-date-prompt-use-org-read-date t)
   )
 
-
+;; Use citar and Denote together
+(use-package citar-denote
+  :ensure t
+  :after (citar denote))
 
 (provide 'ce-pkm)
 ;;; ce-pkm.el ends here
