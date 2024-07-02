@@ -120,7 +120,9 @@ face attributes.")
 (require 'ce-ide)                       ; Turn Emacs into an IDE for all languages
 (require 'ce-lang-python)               ; Python configuration
 (require 'ce-latex)                     ; For doing science
+(require 'ce-org)                       ; Organize your life in plain text
 (require 'ce-pdf)                       ; Read PDFs from Emacs
+(require 'ce-prose)                     ; Better editing experience for prose
 (require 'ce-pkm)                       ; Personal knowledge management
 (require 'ce-ui)                        ; theming and user interface
 (require 'ce-vc)                        ; version control
