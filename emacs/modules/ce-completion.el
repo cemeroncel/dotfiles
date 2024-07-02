@@ -132,8 +132,13 @@
          ("M-s i" . consult-info)
          ("M-s t" . consult-theme)))
 
+;; Embark
+(use-package embark
+  :ensure t)
 
-
+(use-package embark-consult
+  :ensure t
+  :after (consult embark))
 
 (provide 'ce-completion)
 ;;; ce-completion.el ends here
