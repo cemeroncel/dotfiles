@@ -103,7 +103,8 @@ stored.")
   :bind (("C-c n n" . denote)
          ("C-c n t" . denote-templates)
          ("C-c n d" . denote-date)
-         ("C-c n s" . denote-signature))
+         ("C-c n s" . denote-signature)
+         ("C-c n o" . denote-open-or-create))
   :custom
   ;; Set the denote directory
   (denote-directory (expand-file-name "~/Dropbox/Org/Notes"))
