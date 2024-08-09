@@ -59,7 +59,7 @@ stored.")
   :bind
   (
    ("C-c n b" . #'citar-open)
-   :map org-mode-map
+   :map org-mode-map :package org
         ("C-c b" . #'org-cite-insert))
   :custom
   ;; List of the bibliography files
