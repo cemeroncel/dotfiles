@@ -28,10 +28,20 @@
 ;;;; Olivetti mode
 
 (use-package olivetti
-  :ensure t
+  :disabled t
   :hook (LaTeX-mode org-mode)
   :config
   (customize-set-variable 'olivetti-body-width 85)
+  )
+
+;;;; Visual fill column
+(use-package visual-fill-column
+  :ensure t
+  :hook (LaTeX-mode org-mode)
+  :config
+  (setq-default visual-fill-column-width 85)
+  (setq-default visual-fill-column-center-text t)
+  (setq visual-fill-column-enable-sensible-window-split t)
   )
 
 ;;;; Mixed-pitch
