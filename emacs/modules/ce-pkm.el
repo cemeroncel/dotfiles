@@ -42,7 +42,7 @@ stored.")
 
 (setq ce/bibliography-folder (expand-file-name "Library" "~/Dropbox"))
 (setq ce/bibliography-files `(
-                              ,(expand-file-name "library.bib" ce/bibliography-folder)
+                              ,(expand-file-name "zotero7.bib" ce/bibliography-folder)
                               ))
 (setq ce/bibliography-pdfs (expand-file-name "pdfs/" ce/bibliography-folder))
 
