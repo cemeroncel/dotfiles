@@ -105,12 +105,15 @@ stored.")
          ("C-c n d" . denote-date)
          ("C-c n s" . denote-signature)
          ("C-c n o" . denote-open-or-create))
+  :hook (dired-mode . denote-dired-mode)
   :custom
   ;; Set the denote directory
   (denote-directory (expand-file-name "~/Dropbox/Org/Notes"))
 
   ;; Use the more advanced date selection method of Org mode
   (denote-date-prompt-use-org-read-date t)
+  :config
+  (denote-rename-buffer-mode 1)
   )
 
 ;; Use citar and Denote together
