@@ -244,9 +244,9 @@ See also `org-save-all-org-buffers'"
 ;; cursor enters and exists them.
 ;; https://github.com/io12/org-fragtog
 (use-package org-fragtog
-  :ensure t
   :after org
-  :hook org-mode)
+  :commands (org-fragtog-mode)
+  )
 
 ;;;; org-download
 ;; Easily insert images to Org files
