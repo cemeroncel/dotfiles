@@ -222,6 +222,10 @@ See also `org-save-all-org-buffers'"
   :config
   ;; Activate CDLaTeX
   (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
+
+  ;; Add new items to `org-structure-template-alist'
+  (add-to-list 'org-structure-template-alist
+               '("d" . "definition"))
   )
 
 ;;;; Org-pomodoro
