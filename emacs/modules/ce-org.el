@@ -98,7 +98,7 @@ See also `org-save-all-org-buffers'"
   ;; TODO keywords
   (org-todo-keywords '((sequence "NEXT(n)"
                                  "TODO(t)"
-                                 "ACTIVE(a)"
+                                 "PROJ(p)"
                                  "WAIT(w@)"
                                  "HOLD(h)"
                                  "|"
@@ -107,7 +107,7 @@ See also `org-save-all-org-buffers'"
   ;; Faces for the TODO keywords
   (org-todo-keyword-faces '(("NEXT" . org-todo)
                             ("TODO" . org-todo)
-                            ("ACTIVE" . org-cite)
+                            ("PROJ" . org-tag-group)
                             ("WAIT" . org-warning)
                             ("HOLD" . org-warning)
                             ("CANCELED" . gnus-summary-cancelled)))
@@ -126,6 +126,9 @@ See also `org-save-all-org-buffers'"
   (org-tags-exclude-from-inheritance '("project"))
   ;; Get the image with from the attributes
   (org-image-actual-width nil)
+  ;; Do not align tags
+  (org-auto-align-tags nil)
+  (org-tags-column nil)
   ;; Org-agenda views
   (org-agenda-custom-commands '(
                                 ("d" "Daily view"
