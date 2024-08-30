@@ -100,5 +100,21 @@
   :ensure t
   :hook prog-mode)
 
+;; Pretty mode line
+(use-package mood-line
+  :ensure t
+  ;; Enable mood-line
+  :config
+  (mood-line-mode)
+
+  ;; Use pretty Fira Code-compatible glyphs
+  :custom
+  (mood-line-glyph-alist mood-line-glyphs-unicode))
+
+
+
+
+
+
 (provide 'ce-ui)
 ;;; ce-ui.el ends here
