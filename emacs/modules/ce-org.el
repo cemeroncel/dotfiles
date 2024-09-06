@@ -65,7 +65,7 @@ See also `org-save-all-org-buffers'"
 (use-package org
   :hook (org-mode . visual-line-mode)
   :bind (("C-c c" . org-capture)
-         ("C-c a" . org-agenda))
+         ("C-c o a" . org-agenda))
   :custom
   ;; Return or left-clock with mouse follows link
   (org-return-follows-link t)
@@ -114,16 +114,17 @@ See also `org-save-all-org-buffers'"
   ;; TODO: Capture templates
   ;; Refile targets
   (org-refile-targets '(
+                        (nil . (:level . 1))
                         ("tasks.org" :level . 1)))
   ;; Agenda files
   (org-agenda-files (list
-                     (expand-file-name "projects.org" org-directory)
+                     (expand-file-name "Tasks/projects.org" org-directory)
                      ))
   ;; Include entries from the Emacs diary into Org mode's agenda
   (org-agenda-include-diary t)
   ;; Use tag inheritance but exclude some of the tags
   (org-use-tag-inheritance t)
-  (org-tags-exclude-from-inheritance '("project"))
+  (org-tags-exclude-from-inheritance '("active"))
   ;; Get the image with from the attributes
   (org-image-actual-width nil)
   ;; Do not align tags
@@ -143,79 +144,36 @@ See also `org-save-all-org-buffers'"
                                  )
                                 ("n" "Next action list"
                                  (
-                                  (tags-todo "important/NEXT"
+                                  (tags-todo "deep/NEXT"
                                              (
-                                              (org-agenda-overriding-header "🔴 Important\n")
+                                              (org-agenda-overriding-header "🍵 Deep work\n")
                                               )
                                              )
-                                  (tags-todo "collab/NEXT"
+                                  (tags-todo "shallow/NEXT"
                                              (
-                                              (org-agenda-overriding-header "🟢 Collaboration\n")
-                                              )
-                                             )
-                                  (tags-todo "teaching/NEXT"
-                                             (
-                                              (org-agenda-overriding-header "🟤 Teaching\n")
-                                              )
-                                             )
-                                  (tags-todo "admin/NEXT"
-                                             (
-                                              (org-agenda-overriding-header "🟣 Administrative\n")
-                                              )
-                                             )
-                                  (tags-todo "personal/NEXT"
-                                             (
-                                              (org-agenda-overriding-header "🔵 Personal\n")
+                                              (org-agenda-overriding-header "🍺 Shallow work\n")
                                               )
                                              )
                                   ))
                                 ("p" "Project list"
                                  (
-                                  (tags-todo "project+important/ACTIVE"
+                                  (tags-todo "active/PROJ"
                                              (
-                                              (org-agenda-overriding-header "🔴 Active Projects: Important\n")
+                                              (org-agenda-overriding-header "🔥 Active projects\n")
                                               (org-agenda-remove-tags t)
                                               (org-agenda-prefix-format " ")
                                               )
                                              )
-                                  (tags-todo "project+collab/ACTIVE"
+                                  (tags-todo "waiting/PROJ"
                                              (
-                                              (org-agenda-overriding-header "🟢 Active Projects: Collaboration\n")
+                                              (org-agenda-overriding-header "🚏 Projects in waiting\n")
                                               (org-agenda-remove-tags t)
                                               (org-agenda-prefix-format " ")
                                               )
                                              )
-                                  (tags-todo "project+teaching/ACTIVE"
+                                  (tags-todo "backburner/PROJ"
                                              (
-                                              (org-agenda-overriding-header "🟤 Active Projects: Teaching\n")
-                                              (org-agenda-remove-tags t)
-                                              (org-agenda-prefix-format " ")
-                                              )
-                                             )
-                                  (tags-todo "project+admin/ACTIVE"
-                                             (
-                                              (org-agenda-overriding-header "🟣 Active Projects: Administrative\n")
-                                              (org-agenda-remove-tags t)
-                                              (org-agenda-prefix-format " ")
-                                              )
-                                             )
-                                  (tags-todo "project+personal/ACTIVE"
-                                             (
-                                              (org-agenda-overriding-header "🔵 Active Projects: Personal\n")
-                                              (org-agenda-remove-tags t)
-                                              (org-agenda-prefix-format " ")
-                                              )
-                                             )                                  
-                                  (tags-todo "project/HOLD"
-                                             (
-                                              (org-agenda-overriding-header "🟡 Projects on hold\n")
-                                              (org-agenda-remove-tags t)
-                                              (org-agenda-prefix-format " ")
-                                              )
-                                             )
-                                  (tags-todo "project/WAIT"
-                                             (
-                                              (org-agenda-overriding-header "🟠 Projects on waiting\n")
+                                              (org-agenda-overriding-header "🧊 Projects in backburner\n")
                                               (org-agenda-remove-tags t)
                                               (org-agenda-prefix-format " ")
                                               )
