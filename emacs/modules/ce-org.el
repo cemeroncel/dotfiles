@@ -102,7 +102,7 @@ See also `org-save-all-org-buffers'"
                                  "WAIT(w@)"
                                  "HOLD(h)"
                                  "|"
-                                 "DONE(d)"
+                                 "DONE(d!)"
                                  "CANCELED(c@)")))
   ;; Faces for the TODO keywords
   (org-todo-keyword-faces '(("NEXT" . org-todo)
@@ -119,6 +119,7 @@ See also `org-save-all-org-buffers'"
   ;; Agenda files
   (org-agenda-files (list
                      (expand-file-name "Tasks/projects.org" org-directory)
+                     (expand-file-name "Tasks/tasks.org" org-directory)
                      ))
   ;; Include entries from the Emacs diary into Org mode's agenda
   (org-agenda-include-diary t)
@@ -187,6 +188,9 @@ See also `org-save-all-org-buffers'"
   ;; Add new items to `org-structure-template-alist'
   (add-to-list 'org-structure-template-alist
                '("d" . "definition"))
+
+  ;; Enable additional Org modules
+  (add-to-list 'org-modules 'habit)
   )
 
 ;;;; Org-pomodoro
