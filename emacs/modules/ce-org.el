@@ -191,7 +191,22 @@ See also `org-save-all-org-buffers'"
 
   ;; Enable additional Org modules
   (add-to-list 'org-modules 'habit)
+
+  ;; Org babel languages for `emacs-jupyter'
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (julia . t)
+     (python . t)
+     (jupyter . t)))
+
+  ;; Default configuration for some Org babel languages
+  (setq org-babel-default-header-args:jupyter-julia '((:async . "yes")
+                                                      (:session . "jl")
+                                                      (:kernel . "julia-1.10")))
   )
+
+
 
 ;;;; Org-pomodoro
 (use-package org-pomodoro
