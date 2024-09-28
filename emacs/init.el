@@ -126,5 +126,6 @@ face attributes.")
 (require 'ce-pkm)                       ; Personal knowledge management
 (require 'ce-ui)                        ; theming and user interface
 (require 'ce-vc)                        ; version control
+(require 'ce-vterm)                     ; Proper terminal emulation
 
 ;;; init.el ends here
