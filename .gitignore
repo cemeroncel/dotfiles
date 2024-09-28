@@ -14,3 +14,5 @@
 /emacs/session*
 /emacs/multisession/
 /emacs/bookmarks
+*.el#
+/emacs/tramp
