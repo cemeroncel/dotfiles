@@ -104,7 +104,8 @@ stored.")
          ("C-c n t" . denote-templates)
          ("C-c n d" . denote-date)
          ("C-c n s" . denote-signature)
-         ("C-c n o" . denote-open-or-create))
+         ("C-c n o" . denote-open-or-create)
+         ("C-c n j" . denote-journal-extras-new-or-existing-entry))
   :hook (dired-mode . denote-dired-mode)
   :custom
   ;; Set the denote directory
