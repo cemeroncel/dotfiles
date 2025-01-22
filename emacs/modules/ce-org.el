@@ -58,7 +58,7 @@ See also `org-save-all-org-buffers'"
 
 ;; Org directory
 (defvar ce/org-directory
-  (expand-file-name "~/Dropbox/Org")
+  (expand-file-name "~/Dropbox/zettelkasten")
   "Path to Org directory.")
 
 ;; Plain Org
@@ -75,7 +75,7 @@ See also `org-save-all-org-buffers'"
   ;; Hide the emphasis markers
   (org-hide-emphasis-markers t)
   ;; Start the org modes indented
-  ;; (org-startup-indented t)
+  (org-startup-indented t)
   ;; Set the `org-directory'
   (org-directory ce/org-directory)
   ;; Fontify quote/verse blocks
@@ -181,6 +181,11 @@ See also `org-save-all-org-buffers'"
                                              )
                                   ))
                                 ))
+  ;; Set a default target file for notes
+  (org-default-notes-file (concat org-directory "/inbox.org"))
+  ;; Org capture templates
+  (org-capture-templates '(
+                           ("n" "Generic note" entry (file "") "* %?\n %i\n Entered on %U" :empty-lines 1)))
   :config
   ;; Activate CDLaTeX
   (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
@@ -190,7 +195,7 @@ See also `org-save-all-org-buffers'"
                '("d" . "definition"))
 
   ;; Enable additional Org modules
-  (add-to-list 'org-modules 'habit)
+  ;; (add-to-list 'org-modules 'habit)
 
   ;; Org babel languages for `emacs-jupyter'
   (org-babel-do-load-languages
@@ -205,6 +210,7 @@ See also `org-save-all-org-buffers'"
                                                       (:session . "jl")
                                                       (:kernel . "julia-1.10")))
   )
+
 
 
 
