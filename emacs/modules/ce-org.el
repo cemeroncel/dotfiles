@@ -118,19 +118,19 @@ See also `org-save-all-org-buffers'"
                         ("tasks.org" :level . 1)))
   ;; Agenda files
   (org-agenda-files (list
-                     (expand-file-name "Tasks/projects.org" org-directory)
-                     (expand-file-name "Tasks/tasks.org" org-directory)
+                     (expand-file-name "projects.org" org-directory)
+                     (expand-file-name "tasks.org" org-directory)
                      ))
   ;; Include entries from the Emacs diary into Org mode's agenda
   (org-agenda-include-diary t)
   ;; Use tag inheritance but exclude some of the tags
   (org-use-tag-inheritance t)
-  (org-tags-exclude-from-inheritance '("active"))
+  ;; (org-tags-exclude-from-inheritance '("active"))
   ;; Get the image with from the attributes
   (org-image-actual-width nil)
   ;; Do not align tags
   (org-auto-align-tags nil)
-  (org-tags-column nil)
+  (org-tags-column nil)                
   ;; Org-agenda views
   (org-agenda-custom-commands '(
                                 ("d" "Daily view"
@@ -167,14 +167,14 @@ See also `org-save-all-org-buffers'"
                                              )
                                   (tags-todo "waiting/PROJ"
                                              (
-                                              (org-agenda-overriding-header "🚏 Projects in waiting\n")
+                                              (org-agenda-overriding-header "🚏 Projects on the waiting queue\n")
                                               (org-agenda-remove-tags t)
                                               (org-agenda-prefix-format " ")
                                               )
                                              )
                                   (tags-todo "backburner/PROJ"
                                              (
-                                              (org-agenda-overriding-header "🧊 Projects in backburner\n")
+                                              (org-agenda-overriding-header "🧊 Projects on backburner\n")
                                               (org-agenda-remove-tags t)
                                               (org-agenda-prefix-format " ")
                                               )
