@@ -34,17 +34,24 @@
   ()
   "List of .bib file location.")
 
-;; Location for the files of the bibliography items
-(defvar ce/bibliography-pdfs
+;; Location for the files of the article bibliography items
+(defvar ce/bibliography-article-pdfs
   ""
-  "Path to the folder where files for the bibliography items are
-stored.")
+  "Path to the folder where files for the article bibliography items
+are stored.")
 
-(setq ce/bibliography-folder (expand-file-name "Library" "~/Dropbox"))
+;; Location for the files of the book bibliography items
+(defvar ce/bibliography-book-pdfs
+  ""
+  "Path to the folder where files for the book bibliography items
+are stored.")
+
+(setq ce/bibliography-folder (expand-file-name "library" "~/Dropbox"))
 (setq ce/bibliography-files `(
-                              ,(expand-file-name "zotero7.bib" ce/bibliography-folder)
+                              ,(expand-file-name "library.bib" ce/bibliography-folder)
                               ))
-(setq ce/bibliography-pdfs (expand-file-name "pdfs/" ce/bibliography-folder))
+(setq ce/bibliography-article-pdfs (expand-file-name "pdfs_article/" ce/bibliography-folder))
+(setq ce/bibliography-book-pdfs (expand-file-name "pdfs_book/" ce/bibliography-folder))
 
 ;; Citar
 (use-package citar
@@ -84,11 +91,11 @@ stored.")
   :bind ("C-c s i" . inspire-literature-search)
   :custom
   ;; Make display faces use variable fonts
-  (inspire-use-variable-pitch nil)
+  (inspire-use-variable-pitch t)
   ;; Not pop up a new frame when initiating a new inspire query
   (inspire-pop-up-new-frame nil)
   ;; Default download folder for papers
-  (inspire-default-download-folder ce/bibliography-pdfs)
+  (inspire-default-download-folder ce/bibliography-article-pdfs)
   ;; Set the master bib file
   (inspire-master-bibliography-file (car ce/bibliography-files))
   ;; Use relative paths for pdf links when exporting bibTeX entries
