@@ -16,4 +16,4 @@
 /emacs/bookmarks
 *.el#
 /emacs/tramp
-init.el
+/emacs/init.el
