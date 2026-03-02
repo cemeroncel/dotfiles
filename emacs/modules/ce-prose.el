@@ -25,8 +25,11 @@
 
 ;;; Code
 
-;;;; Olivetti mode
+;;;; Hooks for text mode
+(add-hook 'text-mode-hook #'visual-line-mode)
+(add-hook 'text-mode-hook #'visual-wrap-prefix-mode)
 
+;;;; Olivetti mode
 (use-package olivetti
   :disabled t
   :hook (LaTeX-mode org-mode)
@@ -39,7 +42,7 @@
   :ensure t
   :hook (LaTeX-mode org-mode)
   :config
-  (setq-default visual-fill-column-width 85)
+  (setq-default visual-fill-column-width 100)
   (setq-default visual-fill-column-center-text t)
   (setq visual-fill-column-enable-sensible-window-split t)
   )
