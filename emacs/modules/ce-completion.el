@@ -71,10 +71,6 @@
   ;; `completion-list-mode-map'.
   :bind (:map minibuffer-local-map
          ("M-A" . marginalia-cycle))
-  :custom
-  (marginalia-annotators '(marginalia-annotators-heavy
-                           marginalia-annotators-light
-                           nil))
   :init
   ;; Marginalia must be activated in the :init section of use-package such that
   ;; the mode gets enabled right away. Note that this forces loading the
@@ -82,37 +78,9 @@
   (marginalia-mode)
   )
 
-;; Corfu
-
-;; Emacs 28 and newer: Hide commands in M-x which do not apply to the current
-;; mode.  Corfu commands are hidden, since they are not used via M-x. This
-;; setting is useful beyond Corfu.
-(setopt read-extended-command-predicate #'command-completion-default-include-p)
-
-;; Enable indentation+completion using the TAB key.
-;; `completion-at-point' is often to M-TAB.
-(setopt tab-always-indent 'complete)
-
-(use-package corfu
-  :ensure t
-  :custom
-  ;; Enable auto completion
-  (corfu-auto t)
-  (corfu-quit-no-match 'separator)
-  (corfu-preview-current nil)
-  :init
-  (global-corfu-mode))
-
-(use-package company
-  :ensure t
-  :disabled
-  :hook (after-init . global-company-mode))
-
 ;; Consult
 (use-package consult
   :ensure t
-  ;; TODO: Add `consult-org-heading' and `consult-org-agenda' into
-  ;; `org-mode-map'
   :bind (
          ("M-s b" . consult-buffer)
          ("M-s y" . consult-yank-from-kill-ring)
@@ -130,7 +98,19 @@
          ("M-s E" . consult-compile-error)
          ("M-s x" . consult-xref)
          ("M-s i" . consult-info)
-         ("M-s t" . consult-theme)))
+         ("M-s t" . consult-theme)
+         :map ce/prefix-buffer-map
+         ("b" . consult-buffer)
+         ("w" . consult-buffer-other-window)
+         ("f" . consult-buffer-other-frame)
+         ("p" . consult-project-buffer)
+         )
+  :config
+  (with-eval-after-load 'org
+    (keymap-set org-mode-map "M-s /" 'consult-org-heading)
+    (keymap-set org-mode-map "M-s a" 'consult-org-agenda))
+  )
+
 
 ;; Embark
 (use-package embark
@@ -160,12 +140,45 @@
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
-                 (window-parameters (mode-line-format . none)))))
-  
+                 (window-parameters (mode-line-format . none)))))  
 
 (use-package embark-consult
   :ensure t
   :after (consult embark))
+
+
+;;;; Completion in Region
+
+;; Enable the mode in programming modes only for now
+(add-hook 'prog-mode-hook #'completion-preview-mode)
+
+;; and in shell and friends
+(with-eval-after-load 'comint
+  (add-hook 'comint-mode-hook #'completion-preview-mode))
+
+;; Some tweaks
+(with-eval-after-load 'completion-preview
+  ;; Show the preview already after two symbol characters
+  (setq completion-preview-minimum-symbol-length 2)
+
+  ;; Non-standard commands to that should show the preview:
+
+  ;; Org mode has a custom `self-insert-command'
+  (push 'org-self-insert-command completion-preview-commands)
+  ;; Paredit has a custom `delete-backward-char' command
+  (push 'paredit-backward-delete completion-preview-commands)
+
+  ;; Bindings that take effect when the preview is shown:
+
+  ;; Cycle the completion candidate that the preview shows
+  (keymap-set completion-preview-active-mode-map "M-n" #'completion-preview-next-candidate)
+  (keymap-set completion-preview-active-mode-map "M-p" #'completion-preview-prev-candidate)
+  ;; Convenient alternative to C-i after typing one of the above
+  (keymap-set completion-preview-active-mode-map "M-i" #'completion-preview-insert))
+
+;;;; TODO Cape
+
+;;;; TODO TempEL or yassnippet
 
 (provide 'ce-completion)
 ;;; ce-completion.el ends here
