@@ -58,14 +58,14 @@ See also `org-save-all-org-buffers'"
 
 ;; Org directory
 (defvar ce/org-directory
-  (expand-file-name "~/Dropbox/zettelkasten")
+  (expand-file-name "~/Nextcloud/Org")
   "Path to Org directory.")
+
 
 ;; Plain Org
 (use-package org
-  :hook (org-mode . visual-line-mode)
   :bind (("C-c c" . org-capture)
-         ("C-c o a" . org-agenda))
+         ("C-c a" . org-agenda))
   :custom
   ;; Return or left-clock with mouse follows link
   (org-return-follows-link t)
@@ -75,7 +75,7 @@ See also `org-save-all-org-buffers'"
   ;; Hide the emphasis markers
   (org-hide-emphasis-markers t)
   ;; Start the org modes indented
-  (org-startup-indented t)
+  ;; (org-startup-indented t)
   ;; Set the `org-directory'
   (org-directory ce/org-directory)
   ;; Fontify quote/verse blocks
@@ -111,15 +111,17 @@ See also `org-save-all-org-buffers'"
                             ("WAIT" . org-warning)
                             ("HOLD" . org-warning)
                             ("CANCELED" . gnus-summary-cancelled)))
-  ;; TODO: Capture templates
   ;; Refile targets
   (org-refile-targets '(
-                        (nil . (:level . 1))
-                        ("tasks.org" :level . 1)))
+                        ;;(nil . (:level . 1))
+                        (org-agenda-files . (:level . 1))))
+  (org-refile-use-outline-path t)
+  (org-outline-path-complete-in-steps nil)
   ;; Agenda files
   (org-agenda-files (list
-                     (expand-file-name "projects.org" org-directory)
-                     (expand-file-name "tasks.org" org-directory)
+                     (expand-file-name "Tasks/projects.org" org-directory)
+                     (expand-file-name "Tasks/tasks.org" org-directory)
+                     (expand-file-name "calendar.org" org-directory)
                      ))
   ;; Include entries from the Emacs diary into Org mode's agenda
   (org-agenda-include-diary t)
@@ -137,22 +139,25 @@ See also `org-save-all-org-buffers'"
                                  (
                                   (agenda ""
                                           (
-                                           (org-agenda-block-separator " ")
+                                           (org-agenda-end-block-separator " ")
                                            (org-agenda-overriding-header "📅 Today's agenda\n")
+                                           (org-agenda-hide-tags-regexp "active")
                                            (org-agenda-span 1)
                                            ))
+                                  (tags-todo "-backburner/NEXT"
+                                             (
+                                              (org-agenda-overriding-header "🚀 Next actions\n")
+                                              (org-agenda-hide-tags-regexp "active")                                              
+                                              )
+                                             )
                                  )
                                  )
                                 ("n" "Next action list"
                                  (
-                                  (tags-todo "deep/NEXT"
+                                  (tags-todo "-backburner/NEXT"
                                              (
-                                              (org-agenda-overriding-header "🍵 Deep work\n")
-                                              )
-                                             )
-                                  (tags-todo "shallow/NEXT"
-                                             (
-                                              (org-agenda-overriding-header "🍺 Shallow work\n")
+                                              (org-agenda-overriding-header "🚀 Next actions\n")
+                                              (org-agenda-hide-tags-regexp "active")                                              
                                               )
                                              )
                                   ))
@@ -161,22 +166,25 @@ See also `org-save-all-org-buffers'"
                                   (tags-todo "active/PROJ"
                                              (
                                               (org-agenda-overriding-header "🔥 Active projects\n")
-                                              (org-agenda-remove-tags t)
+                                              (org-agenda-remove-tags nil)
                                               (org-agenda-prefix-format " ")
+                                              (org-agenda-hide-tags-regexp "active")
                                               )
                                              )
                                   (tags-todo "waiting/PROJ"
                                              (
                                               (org-agenda-overriding-header "🚏 Projects on the waiting queue\n")
-                                              (org-agenda-remove-tags t)
+                                              (org-agenda-remove-tags nil)
                                               (org-agenda-prefix-format " ")
+                                              (org-agenda-hide-tags-regexp "waiting")
                                               )
                                              )
                                   (tags-todo "backburner/PROJ"
                                              (
                                               (org-agenda-overriding-header "🧊 Projects on backburner\n")
-                                              (org-agenda-remove-tags t)
+                                              (org-agenda-remove-tags nil)
                                               (org-agenda-prefix-format " ")
+                                              (org-agenda-hide-tags-regexp "backburner")
                                               )
                                              )
                                   ))
@@ -185,7 +193,27 @@ See also `org-save-all-org-buffers'"
   (org-default-notes-file (concat org-directory "/inbox.org"))
   ;; Org capture templates
   (org-capture-templates '(
-                           ("n" "Generic note" entry (file "") "* %?\n %i\n Entered on %U" :empty-lines 1)))
+                           ("n" "Fleeting note" entry (file "")
+                            "* %?\n %i\n Entered on %U" :empty-lines 1)
+                           ("a" "Next action")
+                           ("aa" "Single task action" entry
+                            (file+headline "Tasks/tasks.org" "Single task actions")
+                            "* NEXT %?\n Entered on %U" :empty-lines 1)
+                           ("ap" "Project action" entry
+                            (file+headline "Tasks/projects.org" "Unrefiled Project Actions")
+                            "* NEXT %?\n Entered on %U" :empty-lines 1
+                            :refile-targets (("~/Dropbox/Org/Tasks/projects.org" :regexp . "*** Tasks"))
+                            )
+                           ("as" "Scheduled task" entry
+                            (file+headline "Tasks/tasks.org" "Scheduled Tasks")
+                            "* TODO %?\n SCHEDULED: %^t\n Entered on %U" :empty-lines 1)
+                           ("ar" "Recurring task" entry
+                            (file+headline "Tasks/tasks.org" "Recurring Tasks")
+                            "* TODO %?\n SCHEDULED: %^t\n Entered on %U" :empty-lines 1)
+                           ("at" "Tickler item" entry
+                            (file+headline "Tasks/tasks.org" "Tickler file")
+                            "* %?\n SCHEDULED: %^t\n Entered on %U" :empty-lines 1)
+                           ))
   :config
   ;; Activate CDLaTeX
   (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
@@ -198,20 +226,37 @@ See also `org-save-all-org-buffers'"
   ;; (add-to-list 'org-modules 'habit)
 
   ;; Org babel languages for `emacs-jupyter'
+  ;; (org-babel-do-load-languages
+  ;;  'org-babel-load-languages
+  ;;  '((emacs-lisp . t)
+  ;;    (julia . t)
+  ;;    (python . t)
+  ;;    (jupyter . t)))
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
-     (julia . t)
-     (python . t)
-     (jupyter . t)))
+     (latex . t)))
 
   ;; Default configuration for some Org babel languages
   (setq org-babel-default-header-args:jupyter-julia '((:async . "yes")
                                                       (:session . "jl")
                                                       (:kernel . "julia-1.10")))
+
+  ;; Add additional LaTeX classes
+  (with-eval-after-load 'ox-latex
+    (add-to-list 'org-latex-classes
+                 '("kaohandt" "\\documentclass[fontsize=10pt]{kaohandt}"
+                   ("\\section{%s}" . "\\section*{%s}")
+                   ("\\subsection{%s}" . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+    )
+
+  ;; Use `latexmk' for the build process
+  (with-eval-after-load 'ox-latex
+    (setq org-latex-to-pdf-process (list "latexmk -pdf %f")))
   )
-
-
 
 
 ;;;; Org-pomodoro
