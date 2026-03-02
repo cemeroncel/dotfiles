@@ -24,6 +24,7 @@
 
 ;;; Code:
 
+;;;; helpful
 (use-package helpful
   :ensure t
   ;; The built-in `describe-function' includes both functions
@@ -33,15 +34,36 @@
          ("C-h v" . helpful-variable)
          ("C-h k" . helpful-key)
          ("C-h x" . helpful-command)
-         ("C-h d" . helpful-at-point))
+         ("C-h d" . helpful-at-point)
+         :map ce/prefix-help-map
+         ("f" . helpful-callable)
+         ("F" . helpful-function)
+         ("v" . helpful-variable)
+         ("k" . helpful-key)
+         ("x" . helpful-command)
+         ("d" . helpful-at-point)
+         )
   )
 
+
+;;;; elisp-demos
 (use-package elisp-demos
   :after helpful
   :ensure t
   :defer t
   :config
   (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update)
+  )
+
+;;;; devdocs
+;; Use `devdocs-install' to install documentation.
+(use-package devdocs
+  :ensure t
+  :bind (
+         ("C-h D" . devdocs-lookup)
+         :map ce/prefix-help-map
+         ("D" . devdocs-lookup)
+         )
   )
 
 (provide 'ce-help)
