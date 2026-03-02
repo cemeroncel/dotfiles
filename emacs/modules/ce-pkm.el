@@ -46,12 +46,16 @@ are stored.")
   "Path to the folder where files for the book bibliography items
 are stored.")
 
-(setq ce/bibliography-folder (expand-file-name "library" "~/Dropbox"))
+(setq ce/bibliography-folder (expand-file-name "Library" "~/Nextcloud"))
 (setq ce/bibliography-files `(
-                              ,(expand-file-name "library.bib" ce/bibliography-folder)
+                              ,(expand-file-name "articles.bib" ce/bibliography-folder)                              
+                              ,(expand-file-name "zotero.bib" ce/bibliography-folder)
                               ))
-(setq ce/bibliography-article-pdfs (expand-file-name "pdfs_article/" ce/bibliography-folder))
-(setq ce/bibliography-book-pdfs (expand-file-name "pdfs_book/" ce/bibliography-folder))
+(setq ce/bibliography-article-pdfs
+      (expand-file-name "pdfs_articles/" ce/bibliography-folder))
+(setq ce/bibliography-book-pdfs
+      (expand-file-name "pdfs_books/" ce/bibliography-folder))
+
 
 ;; Citar
 (use-package citar
@@ -102,6 +106,8 @@ are stored.")
   (inspire-pdf-use-absolute-path nil)
   )
 
+;;;; Denote
+
 ;; Note taking in Prot's way https://protesilaos.com/emacs/denote 
 ;; TODO Test the `denote-org-extras-extract-org-subtree' function which is
 ;; part of the optional `denote-org-extras.el' extension.
@@ -112,11 +118,19 @@ are stored.")
          ("C-c n d" . denote-date)
          ("C-c n s" . denote-signature)
          ("C-c n o" . denote-open-or-create)
-         ("C-c n j" . denote-journal-extras-new-or-existing-entry))
+         ("C-c n j" . denote-journal-extras-new-or-existing-entry)
+         :map ce/prefix-notes-map
+         ("n" . denote)
+         ("t" . denote-templates)
+         ("d" . denote-date)
+         ("s" . denote-signature)
+         ("o" . denote-open-or-create)
+         ("j" . denote-journal-extras-new-or-existing-entry)
+         )
   :hook (dired-mode . denote-dired-mode)
   :custom
   ;; Set the denote directory
-  (denote-directory (expand-file-name "~/Dropbox/Org/Notes"))
+  (denote-directory (expand-file-name "~/Nextcloud/Org/Notes"))
 
   ;; Use the more advanced date selection method of Org mode
   (denote-date-prompt-use-org-read-date t)
@@ -124,10 +138,55 @@ are stored.")
   (denote-rename-buffer-mode 1)
   )
 
+(use-package denote-org
+  :ensure t
+  :after denote
+  :commands
+  ;; I list the commands here so that you can discover them more
+  ;; easily.  You might want to bind the most frequently used ones to
+  ;; the `org-mode-map'.
+  ( denote-org-link-to-heading
+    denote-org-backlinks-for-heading
+
+    denote-org-extract-org-subtree
+
+    denote-org-convert-links-to-file-type
+    denote-org-convert-links-to-denote-type
+
+    denote-org-dblock-insert-files
+    denote-org-dblock-insert-links
+    denote-org-dblock-insert-backlinks
+    denote-org-dblock-insert-missing-links
+    denote-org-dblock-insert-files-as-headings)
+  )
+
+;;;; citar denote
+
 ;; Use citar and Denote together
 (use-package citar-denote
   :ensure t
-  :after (citar denote))
+  :demand t
+  :after (:any citar denote)
+  :init
+  (citar-denote-mode)
+  )
+
+;;;; arxiv-mode
+
+;; Check arXiv (https://arxiv.org/) from Emacs
+;; https://github.com/fizban007/arxiv-mode
+(use-package arxiv-mode
+  :ensure t
+  :hook ((arxiv-abstract-mode arxiv-mode) . #'turn-on-visual-line-mode)
+  :bind (:map ce/prefix-library-map
+              ("a" . arxiv-read-new))
+  :custom
+  ;; Use variable pitch fonts in `arxiv-mode' buffers.
+  (arxiv-use-variable-pitch t)
+  ;; Where to store the PDFs?
+  (arxiv-default-download-folder (expand-file-name "~/Nextcloud/Library/arxiv/"))
+  (arxiv-default-bibliography (expand-file-name "~/Nextcloud/Library/arxiv.el"))
+  )
 
 (provide 'ce-pkm)
 ;;; ce-pkm.el ends here
