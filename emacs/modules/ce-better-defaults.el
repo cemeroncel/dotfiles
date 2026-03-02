@@ -39,9 +39,6 @@
 ;; Use spaces instead of tabs
 (setq-default indent-tabs-mode nil)
 
-;; Use "y" and "n" to confirm/negate prompt instead of "yes" and "no"
-(setq use-short-answers t)
-
 ;; Turn on recentf mode
 (add-hook 'after-init-hook #'recentf-mode)
 
