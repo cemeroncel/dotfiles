@@ -24,51 +24,16 @@
 
 ;;; Code:
 
-;; ef-themes
-(use-package ef-themes
+;;;; Modus themes
+(use-package modus-themes
   :ensure t
-  :bind ("<f6>" . ef-themes-toggle)
-  :custom
-  ;; If you like two specific themes and want to switch between them, you
-  ;; can specify them in `ef-themes-to-toggle' and then invoke the command
-  ;; `ef-themes-toggle'.  All the themes are included in the variable
-  ;; `ef-themes-collection'.
-  (ef-themes-to-toggle '(ef-light ef-elea-dark))
+  :config
+  ;; Add all your customizations prior to loading the themes
+  (setq modus-themes-italic-constructs t
+        modus-themes-bold-constructs t)
 
-  (ef-themes-headings ; read the manual's entry or the doc string
-   '((0 variable-pitch light 1.9)
-     (1 variable-pitch light 1.7)
-     (2 variable-pitch regular 1.5)
-     (3 variable-pitch regular 1.3)
-     (4 variable-pitch regular 1.1)
-     (t variable-pitch 1.0)           ; absence of weight means `bold'
-     ))
-
-  (ef-themes-mixed-fonts t)
-  (ef-themes-variable-pitch-ui t)
-
-  :init
-  ;; Disable all other themes to avoid awkward blending:
-  (mapc #'disable-theme custom-enabled-themes)
-
-  ;; Load the theme of choice:
-  ;; (load-theme 'ef-elea-dark :no-confirm)
-
-  ;; OR use this to load the theme which also calls `ef-themes-post-load-hook':
-  (ef-themes-select 'ef-light)
-
-  ;; The themes we provide are recorded in the `ef-themes-dark-themes',
-  ;; `ef-themes-light-themes'.
-
-  ;; We also provide these commands, but do not assign them to any key:
-  ;;
-  ;; - `ef-themes-toggle'
-  ;; - `ef-themes-select'
-  ;; - `ef-themes-select-dark'
-  ;; - `ef-themes-select-light'
-  ;; - `ef-themes-load-random'
-  ;; - `ef-themes-preview-colors'
-  ;; - `ef-themes-preview-colors-current'
+  ;; Load the theme of your choice.
+  (modus-themes-load-theme 'modus-operandi)
   )
 
 ;; Spacious padding
@@ -92,7 +57,6 @@
       :mode-line-inactive vertical-border))
   :init
   (spacious-padding-mode 1)
-
   )
 
 ;; Rainbow delimiters
@@ -111,6 +75,41 @@
   :custom
   (mood-line-glyph-alist mood-line-glyphs-unicode))
 
+;;;; Font configuration
+(use-package fontaine
+  :ensure t
+  :bind (:map ce/prefix-toggle-map
+  	    ("f" . fontaine-set-preset))
+  :custom
+  (fontaine-latest-state-file (locate-user-emacs-file "fontaine-latest-state.eld"))
+  (fontaine-presets '(
+                      (titus
+  		       :default-family "Aporetic Serif Mono"
+  		       :default-height 120
+                       :fixed-pitch-family "Aporetic Serif Mono"
+  		       :fixed-pitch-height 1.0
+  		       :variable-pitch-family "Aporetic Sans"
+  		       :variable-pitch-height 1.0
+  		     )
+  		    (2160p
+  		     :default-family "Aporetic Serif Mono"
+  		     :default-height 140
+                       :fixed-pitch-family "Aporetic Serif Mono"                       
+  		     :fixed-pitch-height 1.0
+  		     :variable-pitch-family "Aporetic Sans"
+  		     :variable-pitch-height 1.0
+  		     )
+  		    )
+  		  )
+  :init
+  ;; Set the last preset or fall back to desired style from `fontaine-presets'
+  ;; (the `regular' in this case).
+  (fontaine-set-preset 'titus)
+
+  ;; Persist the latest font preset when closing/starting Emacs and
+  ;; while switching between themes.
+  (fontaine-mode 1)
+  )
 
 
 
