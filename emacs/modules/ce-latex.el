@@ -86,6 +86,12 @@
   )
 
 
+(use-package auctex-latexmk
+  :ensure t
+  :config
+  (auctex-latexmk-setup))
+
+
 
 (provide 'ce-latex)
 ;;; ce-latex.el ends here
