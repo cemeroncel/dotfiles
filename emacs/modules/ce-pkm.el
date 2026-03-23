@@ -134,6 +134,9 @@ are stored.")
 
   ;; Use the more advanced date selection method of Org mode
   (denote-date-prompt-use-org-read-date t)
+
+  ;; Format for the Denote buffer names
+  (denote-rename-buffer-format "%D [%k] %b")
   :config
   (denote-rename-buffer-mode 1)
   )
@@ -169,6 +172,9 @@ are stored.")
   :after (:any citar denote)
   :init
   (citar-denote-mode)
+  :custom
+  ;; Use citekey as the title of the note
+  (citar-denote-title-format nil)
   )
 
 ;;;; arxiv-mode
