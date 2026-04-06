@@ -65,7 +65,8 @@ See also `org-save-all-org-buffers'"
 ;; Plain Org
 (use-package org
   :bind (("C-c c" . org-capture)
-         ("C-c a" . org-agenda))
+         ("C-c a" . org-agenda)
+         ("C-c l" . org-store-link))
   :custom
   ;; Return or left-clock with mouse follows link
   (org-return-follows-link t)
@@ -88,11 +89,17 @@ See also `org-save-all-org-buffers'"
   (org-format-latex-options '(
                               :foreground default
                               :background default
-                              :scale 1.5
+                              :scale 1.2
                               :html-foreground "Black"
                               :html-background "Transparent"
                               :html-scale 1.0
                               :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
+  ;; Default LaTeX packages
+  (org-latex-packages-alist '(
+                              ("" "siunitx" t)
+                              ("" "physics" t)
+                              ("" "kpfonts" t)
+                              ))
   ;; Record when the task is moved to the DONE state
   (org-log-done t)
   ;; TODO keywords
@@ -225,22 +232,12 @@ See also `org-save-all-org-buffers'"
   ;; Enable additional Org modules
   ;; (add-to-list 'org-modules 'habit)
 
-  ;; Org babel languages for `emacs-jupyter'
-  ;; (org-babel-do-load-languages
-  ;;  'org-babel-load-languages
-  ;;  '((emacs-lisp . t)
-  ;;    (julia . t)
-  ;;    (python . t)
-  ;;    (jupyter . t)))
+  ;; Languages for Org babel.
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
-     (latex . t)))
-
-  ;; Default configuration for some Org babel languages
-  (setq org-babel-default-header-args:jupyter-julia '((:async . "yes")
-                                                      (:session . "jl")
-                                                      (:kernel . "julia-1.10")))
+     (latex . t)
+     (python . t)))
 
   ;; Add additional LaTeX classes
   (with-eval-after-load 'ox-latex
@@ -275,6 +272,7 @@ See also `org-save-all-org-buffers'"
 ;; cursor enters and exists them.
 ;; https://github.com/io12/org-fragtog
 (use-package org-fragtog
+  :ensure t
   :after org
   :commands (org-fragtog-mode)
   )
