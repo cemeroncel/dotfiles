@@ -24,6 +24,17 @@
 
 ;;; Code:
 
+;;;; Function to learn whether we are using a dark theme for the desktop
+(defun ce/get-gnome-color-scheme ()
+  "Retrieve the current GNOME color scheme as a string."
+  (let ((raw-output (shell-command-to-string "gsettings get org.gnome.desktop.interface color-scheme")))
+    ;; gsettings usually returns strings wrapped in single quotes with a trailing newline (e.g., "'prefer-dark'\n").
+    ;; We use replace-regexp-in-string to remove the quotes, and string-trim to remove the newline.
+    (string-trim (replace-regexp-in-string "'" "" raw-output))))
+
+(defvar ce/prefer-dark (string= (ce/get-gnome-color-scheme) "prefer-dark")
+  "Non-nil if the GNOME color scheme is set to prefer-dark.")
+
 ;;;; Modus themes
 (use-package modus-themes
   :ensure t
@@ -33,7 +44,10 @@
         modus-themes-bold-constructs t)
 
   ;; Load the theme of your choice.
-  (modus-themes-load-theme 'modus-operandi)
+  (if ce/prefer-dark
+      (modus-themes-load-theme 'modus-vivendi-tinted)
+    (modus-themes-load-theme 'modus-operandi)
+      )
   )
 
 ;; Spacious padding
@@ -91,9 +105,9 @@
   		       :variable-pitch-family "Aporetic Sans"
   		       :variable-pitch-height 1.0
   		     )
-  		    (2160p
+  		    (tuxedus
   		     :default-family "Aporetic Serif Mono"
-  		     :default-height 140
+  		     :default-height 130
                        :fixed-pitch-family "Aporetic Serif Mono"                       
   		     :fixed-pitch-height 1.0
   		     :variable-pitch-family "Aporetic Sans"
