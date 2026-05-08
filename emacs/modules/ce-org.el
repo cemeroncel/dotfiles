@@ -98,7 +98,6 @@ See also `org-save-all-org-buffers'"
   (org-latex-packages-alist '(
                               ("" "siunitx" t)
                               ("" "physics" t)
-                              ("" "kpfonts" t)
                               ))
   ;; Record when the task is moved to the DONE state
   (org-log-done t)
