@@ -24,40 +24,57 @@
 
 ;;; Code:
 
-(defvar ce/default-conda-environment "sci"
-  "Name of the conda environment that will be used by default.")
-
-(defconst ce/default-conda-environment-bin
-  (expand-file-name "bin"
-                    (expand-file-name
-                     ce/default-conda-environment
-                     "~/miniforge3/envs"))
-  "The `bin' directory of the conda environment `ce/default-conda-environment'."
-  )
-
-(setopt python-shell-interpreter
-        (expand-file-name "ipython" ce/default-conda-environment-bin))
-(setopt python-shell-interpreter-args "--simple-prompt")
-
 ;; Do not try to guess indentation
 (setopt python-indent-guess-indent-offset nil)
 (setopt python-indent-offset 4)
-
-;; From https://www.emacswiki.org/emacs/ExecPath
-(setenv "PATH" (concat (getenv "PATH") (concat ":" ce/default-conda-environment-bin)))
-(setq exec-path (append exec-path `(,ce/default-conda-environment-bin)))
 
 ;; Eglot configuration
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
                `(python-mode . ,(eglot-alternatives
-                                 '(("pylsp")
-                                   ("pyright-langserver" "--stdio")))
-                             )))
-(setq-default eglot-workspace-configuration
-              '(:pylsp (:plugins (:jedi_completion (:include_params t
-                                                    :fuzzy t)
-                                                   :pylint (:enabled :json-false)))))
+                                 '(
+                                   ("basedpyright-langserver" "--stdio")))
+                             ))
+  )
+
+;;;; docstrings
+;; For conveniently entering numpy style docstrings
+(use-package numpydoc
+  :ensure t
+  :after python
+  :bind (
+         :map python-ts-mode-map
+              ("C-c d" . numpydoc-generate))
+  :custom
+  ;; Do not prompt for descriptions
+  (numpydoc-prompt-for-input nil)
+  ;; Do not insert Examples block
+  (numpydoc-insert-examples-block nil)
+  )
+
+;; This package provides a minor mode for editing Python
+;; docstrings. It provides syntax highlighting for docstrings and
+;; overrides the `fill-paragraph' function so that lines are wrapped
+;; according to the Python style convention.
+(use-package python-docstring
+  :ensure t
+  :hook python-ts-mode)
+
+;;;; Testing
+
+;; Running pytest from emacs
+(use-package python-pytest
+    :ensure t
+    :after python
+    :bind (
+           :map python-ts-mode-map
+                ("C-c t" . python-pytest-dispatch)))
+
+
+;;;; uv integration
+(use-package uv-mode
+  :ensure t
+  :hook (python-ts-mode . uv-mode-auto-activate-hook))
 
 (provide 'ce-lang-python)
 ;;; ce-lang-python.el ends here
