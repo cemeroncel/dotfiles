@@ -36,16 +36,23 @@
   "Non-nil if the GNOME color scheme is set to prefer-dark.")
 
 ;;;; Modus themes
+
+;; Add directory for custom themes to load path
+(add-to-list 'custom-theme-load-path (locate-user-emacs-file "my-themes/"))
+
+;; Install and configure modus-themes
 (use-package modus-themes
   :ensure t
   :config
-  ;; Add all your customizations prior to loading the themes
+  ;; Add all your customizations prior to loading the themeshow to use ibm plex math in latex
   (setq modus-themes-italic-constructs t
         modus-themes-bold-constructs t)
 
+  (modus-themes-activate 'modus-catpuccin-mocha)
+
   ;; Load the theme of your choice.
   (if ce/prefer-dark
-      (modus-themes-load-theme 'modus-vivendi-tinted)
+      (modus-themes-load-theme 'modus-catpuccin-mocha)
     (modus-themes-load-theme 'modus-operandi)
       )
   )
