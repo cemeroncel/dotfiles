@@ -108,7 +108,7 @@
   		    (tuxedus
   		     :default-family "Aporetic Serif Mono"
   		     :default-height 130
-                       :fixed-pitch-family "Aporetic Serif Mono"                       
+                     :fixed-pitch-family "Aporetic Serif Mono"
   		     :fixed-pitch-height 1.0
   		     :variable-pitch-family "Aporetic Sans"
   		     :variable-pitch-height 1.0
@@ -118,7 +118,7 @@
   :init
   ;; Set the last preset or fall back to desired style from `fontaine-presets'
   ;; (the `regular' in this case).
-  (fontaine-set-preset 'titus)
+  (fontaine-set-preset (intern (system-name)))
 
   ;; Persist the latest font preset when closing/starting Emacs and
   ;; while switching between themes.
