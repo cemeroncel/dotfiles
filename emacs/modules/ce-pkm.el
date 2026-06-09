@@ -144,6 +144,11 @@ are stored.")
 (use-package denote-org
   :ensure t
   :after denote
+  :bind
+  (
+   :map org-mode-map :package org
+   ("C-c n c" . denote-org-extract-org-subtree)
+   )
   :commands
   ;; I list the commands here so that you can discover them more
   ;; easily.  You might want to bind the most frequently used ones to
