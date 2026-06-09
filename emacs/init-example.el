@@ -60,6 +60,11 @@
 ;; 	   (file-exists-p custom-file))
 ;;   (load custom-file nil 'nomessage))
 
+;;;; Bookmark file
+;; Location for the bookmark file. We set this under Nextcloud so we
+;; can share between multiple machines.
+(defvar ce/bookmark-file (expand-file-name "~/Nextcloud/bookmarks"))
+
 ;;;; Custom modules
 ;; Define a variable for the custom modules and add them to the `load-path'
 (defvar ce/modules-directory (expand-file-name "modules/" user-emacs-directory)

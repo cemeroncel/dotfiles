@@ -82,5 +82,8 @@
 ;; Enable automatic parens pairing
 (electric-pair-mode 1)
 
+;; Bookmarks
+(setopt bookmark-default-file ce/bookmark-file)
+
 (provide 'ce-better-defaults)
 ;;; ce-better-defaults.el ends here
