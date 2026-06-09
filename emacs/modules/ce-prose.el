@@ -27,7 +27,11 @@
 
 ;;;; Hooks for text mode
 (add-hook 'text-mode-hook #'visual-line-mode)
-(add-hook 'text-mode-hook #'visual-wrap-prefix-mode)
+
+;; Disabling the `visual-wrap-prefix-mode' since it doesn't work
+;; nicely with indented Org files. If needed, I might turn them on
+;; per-file basis later.
+;; (add-hook 'text-mode-hook #'visual-wrap-prefix-mode)
 
 ;;;; Olivetti mode
 (use-package olivetti
