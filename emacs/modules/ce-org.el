@@ -107,6 +107,7 @@ See also `org-save-all-org-buffers'"
                                  "PROJ(p)"
                                  "WAIT(w@)"
                                  "HOLD(h)"
+                                 "SCHD(s)"
                                  "|"
                                  "DONE(d!)"
                                  "CANCELED(c@)")))
@@ -116,6 +117,7 @@ See also `org-save-all-org-buffers'"
                             ("PROJ" . org-tag-group)
                             ("WAIT" . org-warning)
                             ("HOLD" . org-warning)
+                            ("SCHD" . org-warning)
                             ("CANCELED" . gnus-summary-cancelled)))
   ;; Refile targets
   (org-refile-targets '(
@@ -127,7 +129,6 @@ See also `org-save-all-org-buffers'"
   (org-agenda-files (list
                      (expand-file-name "Tasks/projects.org" org-directory)
                      (expand-file-name "Tasks/tasks.org" org-directory)
-                     (expand-file-name "calendar.org" org-directory)
                      ))
   ;; Include entries from the Emacs diary into Org mode's agenda
   (org-agenda-include-diary t)
@@ -153,7 +154,8 @@ See also `org-save-all-org-buffers'"
                                   (tags-todo "-backburner/NEXT"
                                              (
                                               (org-agenda-overriding-header "🚀 Next actions\n")
-                                              (org-agenda-hide-tags-regexp "active")                                              
+                                              (org-agenda-hide-tags-regexp "active")
+                                              (org-agenda-sorting-strategy '(tag-up))
                                               )
                                              )
                                  )
@@ -163,7 +165,8 @@ See also `org-save-all-org-buffers'"
                                   (tags-todo "-backburner/NEXT"
                                              (
                                               (org-agenda-overriding-header "🚀 Next actions\n")
-                                              (org-agenda-hide-tags-regexp "active")                                              
+                                              (org-agenda-hide-tags-regexp "active")
+                                              (org-agenda-sorting-strategy '(tag-up))
                                               )
                                              )
                                   ))
@@ -175,6 +178,7 @@ See also `org-save-all-org-buffers'"
                                               (org-agenda-remove-tags nil)
                                               (org-agenda-prefix-format " ")
                                               (org-agenda-hide-tags-regexp "active")
+                                              (org-agenda-sorting-strategy '(tag-up))
                                               )
                                              )
                                   (tags-todo "waiting/PROJ"
@@ -220,6 +224,8 @@ See also `org-save-all-org-buffers'"
                             (file+headline "Tasks/tasks.org" "Tickler file")
                             "* %?\n SCHEDULED: %^t\n Entered on %U" :empty-lines 1)
                            ))
+  ;; Stuck projects
+  (org-stuck-projects '("active/+PROJ-DONE" ("NEXT" "TODO" "SCHD") nil ""))
   :config
   ;; Activate CDLaTeX
   (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
@@ -252,8 +258,19 @@ See also `org-save-all-org-buffers'"
   ;; Use `latexmk' for the build process
   (with-eval-after-load 'ox-latex
     (setq org-latex-to-pdf-process (list "latexmk -pdf %f")))
-  )
 
+  ;; Add appointments from Agenda files
+  ;; Taken from https://acidwords.com/posts/2017-02-16-displaying-org-mode-appointments-in-calendar.html
+  (add-hook 'org-finalize-agenda-hook
+            (lambda ()
+              (setq appt-message-warning-time 10        ;; warn 10 min in advance
+                    appt-display-diary nil              ;; do not display diary when (appt-activate) is called
+                    appt-display-mode-line t            ;; show in the modeline
+                    appt-display-format 'window         ;; display notification in window
+                    calendar-mark-diary-entries-flag t) ;; mark diary entries in calendar
+              (org-agenda-to-appt)                      ;; copy all agenda schedule to appointments
+              (appt-activate 1)))                       ;; active appt (appointment notification)
+  )
 
 ;;;; Org-pomodoro
 (use-package org-pomodoro
