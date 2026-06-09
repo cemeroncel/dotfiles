@@ -75,8 +75,6 @@
 ;; (require 'ce-completion)                ; modern completion mechanism
 ;; (require 'ce-help)                      ; more helpful help buffers
 ;; (require 'ce-ide)                       ; Turn Emacs into an IDE for all languages
-;; (require 'ce-lang-julia)                ; Julia configuration
-;; (require 'ce-lang-jupyter)              ; Who needs JupyterLab?
 ;; (require 'ce-lang-python)               ; Python configuration
 ;; (require 'ce-latex)                     ; For doing science
 ;; (require 'ce-org)                       ; Organize your life in plain text
