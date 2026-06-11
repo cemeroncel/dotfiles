@@ -85,5 +85,9 @@
 ;; Bookmarks
 (setopt bookmark-default-file ce/bookmark-file)
 
+;; If `ripgrep' is installed in the system, use it for `xref'
+(when (executable-find "ripgrep")
+  (setopt xref-search-program 'ripgrep))
+
 (provide 'ce-better-defaults)
 ;;; ce-better-defaults.el ends here
