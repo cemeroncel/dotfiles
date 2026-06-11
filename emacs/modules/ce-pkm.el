@@ -137,6 +137,42 @@ are stored.")
 
   ;; Format for the Denote buffer names
   (denote-rename-buffer-format "%D [%k] %b")
+
+  ;; Templates for notes
+  (denote-templates `(
+                      (test . "* Some heading\n\n*Another heading")
+                      (sciarticle . ,(concat "* 📌 Metadata"
+                                             "\n\n"
+                                             "- Title :: \n"
+                                             "- Authors :: \n"
+                                             "- Journal :: \n"
+                                             "- Publication Year :: \n"
+                                             "\n"
+                                             "* 🎯 Too Long; Didn't Read"
+                                             "\n\n"
+                                             "*One Sentence Summary:* /What did the researchers do, how did they do it, and why does it matter?/"
+                                             "\n\n"
+                                             "** 💡 Core Contributions"
+                                             "\n\n"
+                                             "* 🔍 Context & Problem Statement"
+                                             "\n\n"
+                                             "** What is the specific problem the authors are trying to solve?"
+                                             "\n\n"
+                                             "** What is the current state of the art or existing gap in the literature?"
+                                             "\n\n"
+                                             "** Why is this problem important/worth solving?"
+                                             "\n\n"
+                                             "* 📊 Key Results & Findings"
+                                             "\n\n"
+                                             "/What did they discover? Focus on quantitative and qualitative outcomes./"
+                                             "\n\n"
+                                             "** 📈 Crucial Figures & Tables"
+                                             "\n\n"
+                                             "* 🧪 Methodology & Approach"
+                                             "\n\n"
+                                             "* 🚀 Future Work & Personal Applications"
+                                             ))
+                      ))
   :config
   (denote-rename-buffer-mode 1)
   )
@@ -177,9 +213,14 @@ are stored.")
   :after (:any citar denote)
   :init
   (citar-denote-mode)
+  :bind (
+         :map ce/prefix-notes-map
+              ("l" . citar-create-note))
   :custom
   ;; Use citekey as the title of the note
   (citar-denote-title-format nil)
+  ;; Do not open any attachment
+  (citar-denote-open-attachment nil)
   )
 
 ;;;; arxiv-mode
