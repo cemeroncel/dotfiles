@@ -207,7 +207,7 @@ See also `org-save-all-org-buffers'"
                             "* %?\n %i\n Entered on %U" :empty-lines 1)
                            ("a" "Next action")
                            ("aa" "Single task action" entry
-                            (file+headline "Tasks/tasks.org" "Single task actions")
+                            (file+headline "Tasks/tasks.org" "Single Task Actions 🚀")
                             "* NEXT %?\n Entered on %U" :empty-lines 1)
                            ("ap" "Project action" entry
                             (file+headline "Tasks/projects.org" "Unrefiled Project Actions")
@@ -215,10 +215,10 @@ See also `org-save-all-org-buffers'"
                             :refile-targets (("~/Dropbox/Org/Tasks/projects.org" :regexp . "*** Tasks"))
                             )
                            ("as" "Scheduled task" entry
-                            (file+headline "Tasks/tasks.org" "Scheduled Tasks")
+                            (file+headline "Tasks/tasks.org" "Scheduled Tasks 📅")
                             "* TODO %?\n SCHEDULED: %^t\n Entered on %U" :empty-lines 1)
                            ("ar" "Recurring task" entry
-                            (file+headline "Tasks/tasks.org" "Recurring Tasks")
+                            (file+headline "Tasks/tasks.org" "Recurring Tasks 🪃")
                             "* TODO %?\n SCHEDULED: %^t\n Entered on %U" :empty-lines 1)
                            ("at" "Tickler item" entry
                             (file+headline "Tasks/tasks.org" "Tickler file")
